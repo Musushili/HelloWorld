@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ems_3.mapper.UserMapper">
+
+    <resultMap id="UserEntityMap" type="com.example.ems_3.entity.User">
+        <id column="id" property="id"/>
+        <result column="username" property="username"></result>
+        <result column="password" property="password"></result>
+        <result column="sex" property="sex"></result>
+        <result column="age" property="age"></result>
+        <result column="num" property="num"></result>
+        <result column="uimg" property="uimg"></result>
+    </resultMap>
+    <!--
+
+        Integer insert(@Param("username") String username, @Param("password") String password);
+
+        User findByUsername(@Param("username") String username);
+
+        Integer updateInfoById(User user);
+
+        User findById(@Param("id") Integer id);
+    -->
+
+    <insert id="insert">
+        insert into t_user (username, password)
+        values (#{username}, #{password})
+    </insert>
+
+    <select id="findByUsername" resultMap="UserEntityMap">
+        select *
+        from t_user
+        where username = #{username}
+    </select>
+
+    <select id="findById" resultMap="UserEntityMap">
+        select *
+        from t_user
+        where id = #{id}
+    </select>
+
+    <update id="updateInfoById1">
+        update t_user
+        set username=#{username}
+        where id = #{id}
+    </update>
+    <update id="updateInfoById2">
+        update t_user
+        set sex=#{sex}
+        where id = #{id}
+    </update>
+    <update id="updateInfoById3">
+        update t_user
+        set age=#{age}
+        where id = #{id}
+    </update>
+    <update id="updateInfoById4">
+        update t_user
+        set num=#{num}
+        where id = #{id}
+    </update>
+
+    <update id="changeAvatar">
+        update t_user
+        set uimg=#{uimg}
+        where id=#{id}
+    </update>
+
+    <!--
+        <select id="searchstuid"  resultType="User">
+            select password, sex, age, num, uimg
+            from t_user
+            where username = #{username}
+        </select>
+
+
+        &lt;!&ndash;注册&ndash;&gt;
+        <insert id="register" useGeneratedKeys="true" keyProperty="id">
+            insert into t_user (username, password)
+            values (#{username}, #{password})
+        </insert>
+
+        &lt;!&ndash;登录方法&ndash;&gt;
+        <select id="login" resultType="User">
+            select username, password, sex, age, num, uimg
+            from t_user
+            where username = #{username}
+              and password = #{password}
+        </select>
+
+    &lt;!&ndash;
+
+        &lt;!&ndash;更新个人信息&ndash;&gt;
+        <update id="update" parameterType="User">
+            update t_user ( username, password, sex, age, num, uimg)
+            set username=#{username},
+                password=#{password}
+                sex=#{sex},
+                age=#{age},
+                num=#{num},
+                uimg=#{uimg}
+            where id = #{id}
+        </update>
+
+        <select id="showDetails" resultType="User">
+            select username, password, sex, age, num, uimg
+            from t_user
+            where id = #{id}
+        </select>
+
+    &ndash;&gt;
+    -->
+</mapper>

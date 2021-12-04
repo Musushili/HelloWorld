@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ems_3.mapper.CartMapper">
+
+    <resultMap id="CartEntityMap" type="com.example.ems_3.entity.Cart">
+        <id column="id" property="id"/>
+        <result column="uid" property="uid"></result>
+        <result column="pid" property="pid"></result>
+        <result column="pimg" property="pimg"></result>
+        <result column="proname" property="proname"></result>
+        <result column="introduce" property="introduce"></result>
+        <result column="price" property="price"></result>
+        <result column="number" property="number"></result>
+        <result column="type" property="type"></result>
+
+    </resultMap>
+    <!--
+        Cart findByUid(Integer uid);
+
+        List<CartVO> findVOByUid(Integer uid);
+
+     //Integer addToCart(Integer uid,Integer pid,Integer amount);
+
+        //Integer insert(Cart cart);
+
+        Cart findByUidAndPid(@Param("uid")Integer uid,@Param("pid") Integer pid);
+
+        Integer updateByUidAndPid(@Param("uid") Integer uid,@Param("pid") Integer pid,@Param("number") Integer number);
+
+        Integer deleteByCid(@Param("id")Integer id);//cid
+
+         Integer updateByCid(@Param("id")Integer id);
+
+        Integer deleteByUidAndPid(@Param("uid")Integer uid,@Param("pid")Integer pid);
+
+    -->
+    <delete id="deleteByUidAndPid">
+        delete
+        from t_cart
+        where uid = #{uid}
+          and pid = #{pid}
+    </delete>
+<!--
+
+    <delete id="deleteByCid">
+        delete
+        from t_cart
+        where id = #{id}
+    </delete>
+
+-->
+    <!-- uid+pid ==>cid  -->
+    <select id="findByUidAndPid" resultMap="CartEntityMap">
+        select *
+        from t_cart
+        where uid = #{uid}
+          and pid = #{pid}
+    </select>
+
+    <select id="findByUid" resultMap="CartEntityMap">
+        select *
+        from t_cart
+        where uid = #{uid}
+    </select>
+
+    <select id="findVOByUid" resultType="com.example.ems_3.vo.CartVO">
+        select pid,
+               id,
+               uid,
+               pimg,
+               proname,
+               introduce,
+               price,
+               number,
+               type
+        from t_cart
+        where uid = #{uid}
+        order by pid
+    </select>
+
+    <insert id="insert">
+        insert into t_cart (uid, pid, pimg, proname, introduce, price, number, type)
+        values (#{uid}, #{pid}, #{pimg}, #{proname}, #{introduce},
+                #{price}, #{number}, #{type})
+    </insert>
+
+    <update id="updateByUidAndPid">
+        update t_cart
+        set number=#{number}
+        where uid = #{uid}
+          and pid = #{pid}
+    </update>
+<!--
+
+    <update id="updateByCid">
+        update t_cart
+        set number=#{number}
+        where id = #{id}
+    </update>
+-->
+    <!--uid&ndash;&gt;cid&ndash;&gt;many pid-->
+
+</mapper>

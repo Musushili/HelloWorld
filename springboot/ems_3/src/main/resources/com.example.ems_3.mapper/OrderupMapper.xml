@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ems_3.mapper.OrderupMapper">
+
+    <resultMap id="OrderupEntityMap" type="com.example.ems_3.entity.Orderup">
+        <id column="oid" property="oid"/>
+        <result column="uid" property="uid"></result>
+        <result column="pid" property="pid"></result>
+        <result column="pimg" property="pimg"></result>
+        <result column="proname" property="proname"></result>
+        <result column="introduce" property="introduce"></result>
+        <result column="price" property="price"></result>
+        <result column="number" property="number"></result>
+        <result column="type" property="type"></result>
+    </resultMap>
+
+
+    <!--
+    Integer deleteByUidAndPid(@Param("uid") Integer uid, @Param("pid") Integer pid);
+
+    Integer insert(Orderup orderup);
+
+    List<Orderup> findByUid(@Param("uid") Integer uid);
+
+    Orderup findByUidAndPid(@Param("uid") Integer uid, @Param("pid") Integer pid);
+
+    -->
+    <select id="findByUid" resultMap="OrderupEntityMap">
+        select *
+        from t_orderup
+        where uid = #{uid}
+        order by oid desc
+    </select>
+
+    <select id="findByUidAndPid" resultMap="OrderupEntityMap">
+        select *
+        from t_orderup
+        where uid = #{uid}
+          and pid = #{pid}
+    </select>
+
+
+    <insert id="insert">
+        insert into t_orderup (uid, pid, pimg, proname, introduce, price, number, type)
+        values (#{uid}, #{pid}, #{pimg}, #{proname}, #{introduce}, #{price}, #{number}, #{type})
+    </insert>
+
+    <delete id="deleteByUidAndPid">
+        delete
+        from t_orderup
+        where uid = #{uid}
+          and pid = #{pid}
+    </delete>
+
+
+        <delete id="deleteByOid">
+            delete
+            from t_orderup
+            where oid = #{oid}
+        </delete>
+
+        <select id="findByOid" resultMap="OrderupEntityMap">
+            select *
+            from t_orderup
+            where oid =#{oid}
+        </select>
+
+
+</mapper>
